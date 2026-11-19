@@ -1,1 +1,6 @@
-Flask 
+Flask
+Flask-Login
+Flask-SQLAlchemy
+Werkzeug
+Pillow
+gunicorn
