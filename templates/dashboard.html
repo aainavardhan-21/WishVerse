@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | WishVerse</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins',sans-serif;
+        }
+
+        body{
+            background:linear-gradient(135deg,#f6f8ff,#eef2ff,#fdf4ff);
+            min-height:100vh;
+        }
+
+        .navbar{
+            background:linear-gradient(90deg,#6C63FF,#8E7CFF);
+            box-shadow:0 8px 25px rgba(0,0,0,.10);
+            padding:16px 0;
+        }
+
+        .navbar-brand{
+            font-size:30px;
+            font-weight:700;
+        }
+
+        .hero-box{
+            background:rgba(255,255,255,.75);
+            backdrop-filter:blur(20px);
+            border:1px solid rgba(255,255,255,.6);
+            border-radius:24px;
+            padding:28px;
+            box-shadow:0 15px 40px rgba(0,0,0,.08);
+        }
+
+        .dashboard-title{
+            font-size:34px;
+            font-weight:700;
+            color:#2b2b2b;
+            margin-bottom:8px;
+        }
+
+        .dashboard-subtitle{
+            color:#666;
+            margin-bottom:0;
+        }
+
+        .btn-primary{
+            background:#6C63FF;
+            border:none;
+            border-radius:14px;
+            padding:12px 18px;
+            font-weight:600;
+            box-shadow:0 10px 20px rgba(108,99,255,.25);
+        }
+
+        .btn-primary:hover{
+            background:#584ef0;
+        }
+
+        .btn-light{
+            border-radius:12px;
+            font-weight:600;
+        }
+
+        .card-box{
+            background:rgba(255,255,255,.88);
+            backdrop-filter:blur(18px);
+            border-radius:22px;
+            overflow:hidden;
+            box-shadow:0 10px 30px rgba(0,0,0,.08);
+            transition:.3s;
+            height:100%;
+            border:1px solid rgba(255,255,255,.65);
+        }
+
+        .card-box:hover{
+            transform:translateY(-8px);
+            box-shadow:0 18px 40px rgba(0,0,0,.14);
+        }
+
+        .card-image{
+            width:100%;
+            height:220px;
+            object-fit:cover;
+        }
+
+        .card-body-custom{
+            padding:22px;
+        }
+
+        .card-title{
+            font-size:24px;
+            font-weight:700;
+            margin-bottom:12px;
+            color:#222;
+        }
+
+        .card-text{
+            margin-bottom:8px;
+            color:#444;
+        }
+
+        .empty-box{
+            background:rgba(255,255,255,.82);
+            backdrop-filter:blur(20px);
+            border-radius:24px;
+            padding:70px 35px;
+            text-align:center;
+            box-shadow:0 12px 35px rgba(0,0,0,.08);
+            border:1px solid rgba(255,255,255,.6);
+        }
+
+        .empty-box h2{
+            font-weight:700;
+            margin-bottom:12px;
+            color:#222;
+        }
+
+        .empty-box p{
+            color:#666;
+            margin-bottom:22px;
+        }
+
+        .welcome-pill{
+            display:inline-flex;
+            align-items:center;
+            gap:8px;
+            background:#fff;
+            padding:10px 16px;
+            border-radius:999px;
+            box-shadow:0 8px 22px rgba(0,0,0,.07);
+            color:#444;
+            font-weight:600;
+        }
+
+        .quick-stats{
+            display:flex;
+            gap:14px;
+            flex-wrap:wrap;
+            margin-top:18px;
+        }
+
+        .stat-chip{
+            background:rgba(108,99,255,.08);
+            border:1px solid rgba(108,99,255,.16);
+            color:#4f46e5;
+            border-radius:999px;
+            padding:10px 16px;
+            font-weight:600;
+        }
+
+        .section-head{
+            display:flex;
+            align-items:end;
+            justify-content:space-between;
+            gap:16px;
+        }
+
+        .section-head .btn{
+            min-width:190px;
+        }
+
+        .btn-success{
+            border:none;
+            border-radius:12px;
+            font-weight:600;
+        }
+
+        .btn-danger{
+            border:none;
+            border-radius:12px;
+            font-weight:600;
+        }
+
+        .btn-outline-secondary{
+            border-radius:12px;
+            font-weight:600;
+        }
+
+        @media(max-width:768px){
+            .navbar .container{
+                flex-direction:column;
+                gap:12px;
+            }
+
+            .section-head{
+                flex-direction:column;
+                align-items:flex-start;
+            }
+
+            .section-head .btn{
+                width:100%;
+            }
+
+            .dashboard-title{
+                font-size:28px;
+            }
+
+            .card-image{
+                height:200px;
+            }
+
+            .hero-box{
+                padding:22px;
+            }
+        }
+        .btn-info{
+    border:none;
+    border-radius:12px;
+    font-weight:600;
+    background:#17a2b8;
+    color:white;
+}
+
+.btn-info:hover{
+    background:#138496;
+    color:white;
+}
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-dark">
+    <div class="container">
+        <a class="navbar-brand text-white text-decoration-none" href="{{ url_for('dashboard') }}">
+            ✨ WishVerse
+        </a>
+
+        <div class="d-flex align-items-center gap-3">
+            <span class="fw-semibold text-white">👋 Hi, {{ username }}</span>
+            <a href="{{ url_for('logout') }}" class="btn btn-light px-4">Logout</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container py-5">
+
+    <div class="hero-box mb-4">
+        <div class="section-head">
+            <div>
+                <div class="welcome-pill mb-3">🎉 Welcome to your dashboard</div>
+                <h2 class="dashboard-title">My Greeting Cards ❤️</h2>
+                <p class="dashboard-subtitle">
+                    Create beautiful memories for your loved ones.
+                </p>
+
+                <div class="quick-stats">
+                    <div class="stat-chip">✨ Personal cards</div>
+                    <div class="stat-chip">🎁 Surprise moments</div>
+                    <div class="stat-chip">💌 Secret letters</div>
+                </div>
+            </div>
+
+            <a href="{{ url_for('create_card') }}" class="btn btn-primary btn-lg">
+                + Create New Card
+            </a>
+        </div>
+    </div>
+
+    {% if cards|length == 0 %}
+
+        <div class="empty-box">
+            <h2>🎉 No Greeting Cards Yet</h2>
+            <p>Create your first greeting card and surprise someone special.</p>
+            <a href="{{ url_for('create_card') }}" class="btn btn-primary px-4 py-3">
+                Create Card
+            </a>
+        </div>
+
+    {% else %}
+
+        <div class="row g-4">
+
+            {% for card in cards %}
+            <div class="col-lg-4 col-md-6">
+                <div class="card-box">
+
+                    {% if card.cover_image %}
+                        <img
+                            src="{{ url_for('static', filename='uploads/' + card.cover_image) }}"
+                            class="card-image"
+                            alt="{{ card.title }}">
+                    {% else %}
+                        <img
+                            src="https://picsum.photos/700/500"
+                            class="card-image"
+                            alt="Card preview">
+                    {% endif %}
+
+                    <div class="card-body-custom">
+                        <h4 class="card-title">{{ card.title }}</h4>
+
+                        <p class="card-text">
+                            <strong>Recipient:</strong> {{ card.receiver }}
+                        </p>
+
+                        <p class="card-text">
+                            <strong>Occasion:</strong> {{ card.occasion }}
+                        </p>
+
+                        <p class="card-text">
+                            <strong>Theme:</strong> {{ card.theme }}
+                        </p>
+
+                        <hr>
+
+                        <div class="d-grid gap-2">
+    <a href="{{ url_for('view_card', card_id=card.id) }}" class="btn btn-primary">
+        Open Card
+    </a>
+
+    <a href="{{ url_for('edit_card', card_id=card.id) }}" class="btn btn-warning">
+        Edit
+    </a>
+
+    <a href="{{ url_for('delete_card', card_id=card.id) }}"
+       class="btn btn-danger"
+       onclick="return confirm('Delete this greeting card?')">
+        Delete
+    </a>
+
+    <a href="{{ url_for('view_card', card_id=card.id) }}"
+       class="btn btn-info"
+       onclick="copyCardLink('{{ url_for('view_card', card_id=card.id) }}'); return false;">
+        Share
+    </a>
+</div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+<script>
+function copyCardLink(path) {
+    const link = window.location.origin + path;
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(link).then(() => {
+            alert("Card link copied! Send it to your loved one.");
+        });
+    } else {
+        prompt("Copy this card link:", link);
+    }
+}
+</script>
+</body>
+</html>

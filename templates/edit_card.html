@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Card | WishVerse</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/create_card.css') }}">
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-dark">
+
+    <div class="container">
+
+        <a class="navbar-brand fw-bold fs-3"
+           href="{{ url_for('dashboard') }}">
+
+            ✨ WishVerse
+
+        </a>
+
+    </div>
+
+</nav>
+
+<div class="container">
+
+    <div class="form-box">
+
+        <h2 class="mb-4 text-center">
+            ✏️ Edit Greeting Card
+        </h2>
+
+        <form method="POST" enctype="multipart/form-data">
+
+            <div class="mb-3">
+                <label class="form-label">Card Title</label>
+                <input
+                    type="text"
+                    name="title"
+                    class="form-control"
+                    value="{{ card.title }}"
+                    required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Receiver Name</label>
+                <input
+                    type="text"
+                    name="receiver"
+                    class="form-control"
+                    value="{{ card.receiver }}"
+                    required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Your Name</label>
+                <input
+                    type="text"
+                    name="sender"
+                    class="form-control"
+                    value="{{ card.sender }}"
+                    required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Occasion</label>
+                <select name="occasion" class="form-select">
+                    <option {% if card.occasion == 'Birthday' %}selected{% endif %}>Birthday</option>
+                    <option {% if card.occasion == 'Anniversary' %}selected{% endif %}>Anniversary</option>
+                    <option {% if card.occasion == 'Wedding' %}selected{% endif %}>Wedding</option>
+                    <option {% if card.occasion == 'Friendship' %}selected{% endif %}>Friendship</option>
+                    <option {% if card.occasion == 'Congratulations' %}selected{% endif %}>Congratulations</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Theme</label>
+                <select name="theme" class="form-select">
+                    <option {% if card.theme == 'Purple Galaxy' %}selected{% endif %}>Purple Galaxy</option>
+                    <option {% if card.theme == 'Pink Love' %}selected{% endif %}>Pink Love</option>
+                    <option {% if card.theme == 'Royal Blue' %}selected{% endif %}>Royal Blue</option>
+                    <option {% if card.theme == 'Golden Luxury' %}selected{% endif %}>Golden Luxury</option>
+                    <option {% if card.theme == 'Cute Pastel' %}selected{% endif %}>Cute Pastel</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Greeting Message</label>
+                <textarea
+                    class="form-control"
+                    rows="5"
+                    name="message"
+                    required>{{ card.message }}</textarea>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Secret Letter 💌</label>
+                <textarea
+                    class="form-control"
+                    rows="6"
+                    name="secret_letter">{{ card.secret_letter }}</textarea>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label">Cover Image</label>
+                <input
+                    type="file"
+                    class="form-control"
+                    id="coverImage"
+                    name="cover_image"
+                    accept="image/*">
+
+                {% if card.cover_image %}
+                    <img
+                        src="{{ url_for('static', filename='uploads/' + card.cover_image) }}"
+                        id="previewImage"
+                        class="preview-img"
+                        alt="Current Image"
+                        style="display:block;">
+                {% else %}
+                    <img
+                        id="previewImage"
+                        class="preview-img"
+                        alt="Image Preview">
+                {% endif %}
+            </div>
+
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-purple">
+                    💾 Save Changes
+                </button>
+
+                <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary">
+                    Cancel
+                </a>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/create_card.js') }}"></script>
+
+</body>
+</html>

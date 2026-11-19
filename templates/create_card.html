@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Card | WishVerse</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/create_card.css') }}">
+</head>
+
+<body>
+
+<nav class="navbar navbar-dark">
+    <div class="container">
+        <a class="navbar-brand fw-bold fs-3 text-decoration-none" href="{{ url_for('dashboard') }}">
+            ✨ WishVerse
+        </a>
+
+        <a href="{{ url_for('dashboard') }}" class="btn btn-light px-4">
+            Back
+        </a>
+    </div>
+</nav>
+
+<div class="container py-5">
+    <div class="form-box">
+
+        <div class="form-header text-center mb-4">
+            <div class="badge-pill">🎉 Create a New Wish</div>
+            <h2 class="form-title mt-3">Design your greeting card</h2>
+            <p class="form-subtitle">
+                Add your message, choose a theme, and make it special.
+            </p>
+        </div>
+
+        <form method="POST" enctype="multipart/form-data">
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Card Title</label>
+                    <input
+                        type="text"
+                        name="title"
+                        class="form-control"
+                        placeholder="Enter card title"
+                        required>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Receiver Name</label>
+                    <input
+                        type="text"
+                        name="receiver"
+                        class="form-control"
+                        placeholder="Who is this card for?"
+                        required>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Your Name</label>
+                    <input
+                        type="text"
+                        name="sender"
+                        class="form-control"
+                        placeholder="Your name"
+                        required>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Occasion</label>
+                    <select name="occasion" class="form-select">
+                        <option>Birthday</option>
+                        <option>Anniversary</option>
+                        <option>Wedding</option>
+                        <option>Friendship</option>
+                        <option>Congratulations</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Theme</label>
+                    <select name="theme" class="form-select">
+                        <option>Purple Galaxy</option>
+                        <option>Pink Love</option>
+                        <option>Royal Blue</option>
+                        <option>Golden Luxury</option>
+                        <option>Cute Pastel</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Cover Image</label>
+                    <input
+                        type="file"
+                        class="form-control"
+                        id="coverImage"
+                        name="cover_image"
+                        accept="image/*">
+
+                    <img
+                        id="previewImage"
+                        class="preview-img"
+                        alt="Image Preview">
+                </div>
+            </div>
+
+            <div class="mt-3">
+                <label class="form-label">Greeting Message</label>
+                <textarea
+                    class="form-control"
+                    rows="5"
+                    name="message"
+                    placeholder="Write your heartfelt message..."
+                    required></textarea>
+            </div>
+
+            <div class="mt-3">
+                <label class="form-label">Secret Letter 💌</label>
+                <textarea
+                    class="form-control"
+                    rows="6"
+                    name="secret_letter"
+                    placeholder="Write a secret message..."></textarea>
+            </div>
+
+            <div class="d-grid gap-2 mt-4">
+                <button type="submit" class="btn btn-purple">
+                    ❤️ Create Card
+                </button>
+
+                <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary">
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/create_card.js') }}"></script>
+
+</body>
+</html>

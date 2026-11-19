@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>{{ card.title }} | WishVerse</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/view_card.css') }}">
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+</head>
+
+<body class="{{
+'purple-theme' if card.theme=='Purple Galaxy'
+else 'pink-theme' if card.theme=='Pink Love'
+else 'blue-theme' if card.theme=='Royal Blue'
+else 'gold-theme' if card.theme=='Golden Luxury'
+else 'pastel-theme'
+}}">
+
+<!-- =======================
+        BACKGROUND
+======================== -->
+
+<div class="stars">
+
+{% for i in range(100) %}
+
+<div class="star"
+
+style="
+left:{{ range(0,100)|random }}%;
+top:{{ range(0,100)|random }}%;
+animation-delay:{{ range(0,5)|random }}s;
+"></div>
+
+{% endfor %}
+
+</div>
+
+<div class="hearts">
+
+<span>💖</span>
+<span>💕</span>
+<span>💗</span>
+<span>💝</span>
+<span>💓</span>
+<span>💖</span>
+<span>💕</span>
+<span>💗</span>
+
+</div>
+
+<!-- =======================
+        BALLOONS
+======================== -->
+
+<div class="balloon red b1" onclick="popBalloon(this)"></div>
+
+<div class="balloon blue b2" onclick="popBalloon(this)"></div>
+
+<div class="balloon green b3" onclick="popBalloon(this)"></div>
+
+<div class="balloon yellow b4" onclick="popBalloon(this)"></div>
+
+<div class="balloon pink b5" onclick="popBalloon(this)"></div>
+
+<div class="balloon purple b6" onclick="popBalloon(this)"></div>
+
+<div class="balloon red b7" onclick="popBalloon(this)"></div>
+
+<div class="balloon blue b8" onclick="popBalloon(this)"></div>
+
+<!-- =======================
+        MAIN CARD
+======================== -->
+
+<div class="card-box">
+
+<div class="cake">
+
+<div class="glow"></div>
+
+🎂
+
+</div>
+
+<h1>
+
+🎉 Happy Birthday 🎉
+
+</h1>
+
+<div class="receiver">
+
+{{ card.receiver }}
+
+</div>
+
+<div class="sender">
+
+Made with ❤️ by
+
+<strong>
+
+{{ card.sender }}
+
+</strong>
+
+</div>
+
+<div class="message">
+
+{{ card.message }}
+
+</div>
+
+{% if card.secret_letter or card.cover_image %}
+
+<div class="surprise-section">
+
+<button
+
+class="surprise-btn"
+
+onclick="openSurprise()">
+
+🎁 Open Your Surprise
+
+</button>
+
+<p class="surprise-text">
+
+A special memory is waiting for you ❤️
+
+</p>
+
+</div>
+
+{% endif %}
+
+<div class="buttons">
+
+<a
+
+href="/dashboard"
+
+class="btn btn-primary">
+
+← Back to Dashboard
+
+</a>
+
+</div>
+
+</div>
+
+<!-- =======================
+      PHOTO POPUP
+======================== -->
+
+{% if card.cover_image %}
+
+<div id="surpriseOverlay" class="surprise-overlay" onclick="closeSurpriseOnBackdrop(event)">
+    <div class="surprise-modal" onclick="event.stopPropagation()">
+
+        <button class="close-surprise" onclick="closeSurprise()">✖</button>
+
+        <div class="polaroid">
+            <img
+                src="{{ url_for('static', filename='uploads/' + card.cover_image) }}"
+                alt="Memory">
+            <div class="caption">A Beautiful Memory ❤️</div>
+        </div>
+
+        <p class="memory-text">
+            Every picture holds a memory...<br>
+            But this one hides something special.
+        </p>
+
+        <button class="envelope-btn" onclick="openLetter(); event.stopPropagation();">
+            💌 Open Secret Letter
+        </button>
+
+    </div>
+</div>
+
+{% endif %}
+
+{% if card.secret_letter %}
+
+<div id="letterOverlay" class="letter-overlay" onclick="closeLetterOnBackdrop(event)">
+    <div class="letter-paper" onclick="event.stopPropagation()">
+
+        <button class="close-letter" onclick="closeLetter()">✖</button>
+
+        <div class="wax-seal">❤️</div>
+
+        <h2>A Letter For You</h2>
+
+        <div class="letter-line"></div>
+
+        <div class="letter-content">
+            <p>{{ card.secret_letter }}</p>
+        </div>
+
+        <div class="letter-footer">Made with ❤️ on WishVerse</div>
+
+    </div>
+</div>
+
+{% endif %}
+
+<!-- =======================
+        MUSIC
+======================== -->
+
+<audio
+id="music"
+loop>
+
+<source
+
+src="{{ url_for('static', filename='music/birthday.mp3') }}"
+
+type="audio/mpeg">
+
+</audio>
+
+<button
+
+id="musicBtn"
+
+class="music-btn">
+
+🎵 Music
+
+</button>
+
+<script src="{{ url_for('static', filename='js/view_card.js') }}"></script>
+
+</body>
+
+</html>
